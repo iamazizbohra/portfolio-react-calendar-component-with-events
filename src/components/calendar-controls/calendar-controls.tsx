@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./calendar-controls.module.scss";
-import useIntit from "@/hooks/calendar/useInit";
+import useIntit from "@/hooks/useInit";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { CalendarContext } from "@/app/context/calendar-context-provider";
+import AddEventDialog from "../dialogs/add-event-dialog/add-event-dialog";
 
 export default function CalendarControls() {
   const {
@@ -83,8 +84,7 @@ export default function CalendarControls() {
 
           <div className={styles.spacer}></div>
 
-          {/* <button mat-flat-button color="primary"
-           (click)="presentAddEventDialog()">Add Appointment</button> */}
+          <AddEventDialog></AddEventDialog>
         </div>
 
         <div className={styles.right}>

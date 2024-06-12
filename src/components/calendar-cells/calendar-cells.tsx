@@ -1,6 +1,6 @@
 "use client";
 
-import useIntit from "@/hooks/calendar/useInit";
+import useIntit from "@/hooks/useInit";
 import styles from "./calendar-cells.module.scss";
 import { useContext, useEffect, useRef } from "react";
 import { CalendarCell } from "../calendar/types";

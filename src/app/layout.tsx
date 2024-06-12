@@ -10,6 +10,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import MuiLocalizationProvider from "@/components/mui/mui-localization-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,9 +33,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body suppressHydrationWarning className={inter.className}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <MuiLocalizationProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </MuiLocalizationProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

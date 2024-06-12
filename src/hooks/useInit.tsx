@@ -2,7 +2,7 @@ import { CalendarContext } from "@/app/context/calendar-context-provider";
 import { CalendarCell } from "@/components/calendar/types";
 import { useContext } from "react";
 
-const useIntit = (): {
+const useInit = (): {
   getYearList: (start: number, count: number) => number[];
   getMonthList: () => string[];
   getWeekList: () => string[];
@@ -119,4 +119,4 @@ const useIntit = (): {
   };
 };
 
-export default useIntit;
+export default useInit;

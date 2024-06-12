@@ -1,0 +1,21 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        tr {
+            th {
+                font-size: 22px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                text-align: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+
+    .calendar {
+        width: 50%;
+        background-color: #fbfbfb;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .events {
+        width: 50%;
+    }
+
+    .spacer {
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+}

@@ -1,0 +1,28 @@
+.button {
+    color: #aaaaaa;
+    border: none;
+    font-size: 20px;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    margin: .5rem;
+    background-color: transparent;
+}
+
+.btnCurrentDay {
+    border: 1px solid #0000006b;
+}
+
+.btnCurrentMonth {
+    cursor: pointer;
+    color: #000;
+}
+
+.btnCurrentMonth:hover {
+    background-color: #ccc;
+}
+
+.btnSelected {
+    color: #fff;
+    background-color: #333;
+}

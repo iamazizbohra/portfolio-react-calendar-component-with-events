@@ -11,11 +11,12 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import MuiLocalizationProvider from "@/components/mui/mui-localization-provider";
+import CalendarContextProvider from "@/context/calendar-context-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Calendar App",
+  title: "ReactJs Calendar App",
   description: "ReactJs Calendar Component",
 };
 
@@ -36,7 +37,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <AppRouterCacheProvider>
           <MuiLocalizationProvider>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <CalendarContextProvider>{children}</CalendarContextProvider>
+            </ThemeProvider>
           </MuiLocalizationProvider>
         </AppRouterCacheProvider>
       </body>

@@ -106,7 +106,7 @@ const useInit = (): {
           year: firstDayOfMonth.getFullYear(),
           month: firstDayOfMonth.getMonth(),
           day: firstDayOfMonth.getDate(),
-          hasEvents: eventsMap[bucketKey] != undefined,
+          hasEvents: eventsMap[bucketKey] != undefined && eventsMap[bucketKey].length > 0,
         });
       }
     }

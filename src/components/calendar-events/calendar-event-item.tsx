@@ -49,7 +49,7 @@ export default function CalendarEventItem(props: propsType) {
     <>
       <div
         onClick={() => setOpen(true)}
-        className="py-3 border-b border-[#ccc] last:border-b-0"
+        className="py-3 border-b border-[#ccc] last:border-b-0 cursor-pointer"
       >
         <p className="capitalize text-[16px]">{props.event.title}</p>
         <p className="mt-2 text-[14px] opacity-75">{props.event.time}</p>

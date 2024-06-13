@@ -7,7 +7,7 @@ import CellButton from "./cell-button/cell-button";
 import { CalendarContext } from "@/context/calendar-context-provider";
 
 export default function CalendarCells() {
-  const { selectedMonth, setSelectedDate } = useContext(CalendarContext);
+  const { selectedMonth, setSelectedDate, eventsMap } = useContext(CalendarContext);
   const { getWeekList, getCellList } = useIntit();
 
   const weekList = useRef(getWeekList());

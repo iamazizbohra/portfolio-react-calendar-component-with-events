@@ -9,7 +9,8 @@ const useInit = (): {
   getTimeList: () => string[];
   getCellList: () => CalendarCell[][];
 } => {
-  const { selectedYear, selectedMonth } = useContext(CalendarContext);
+  const { selectedYear, selectedMonth, eventsMap } =
+    useContext(CalendarContext);
 
   const getYearList = (start: number, count: number): number[] => {
     const now = new Date();
@@ -98,11 +99,14 @@ const useInit = (): {
           firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
         }
 
+        const bucketKey = `${firstDayOfMonth.getFullYear()}-${firstDayOfMonth.getMonth()}-${firstDayOfMonth.getDate()}`;
+
         dayList[row].push({
           date: new Date(firstDayOfMonth),
           year: firstDayOfMonth.getFullYear(),
           month: firstDayOfMonth.getMonth(),
           day: firstDayOfMonth.getDate(),
+          hasEvents: eventsMap[bucketKey] != undefined,
         });
       }
     }

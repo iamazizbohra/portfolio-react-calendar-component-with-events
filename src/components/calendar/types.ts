@@ -3,6 +3,7 @@ export type CalendarCell = {
     year: number,
     month: number,
     day: number,
+    hasEvents: boolean,
 }
 
 export type CalendarEvent = {

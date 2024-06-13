@@ -24,8 +24,8 @@ type contextType = {
   setMonthToPrevMonth: () => void;
   setMonthToNextMonth: () => void;
   eventsMap: CalendarEventsMap;
-  addEvent: (title: string, date: Date, time: string) => boolean;
-  updateEvent: (oldEvent: CalendarEvent, newEvent: CalendarEvent) => boolean;
+  addEvent: (title: string, date: Date, time: string) => void;
+  updateEvent: (oldEvent: CalendarEvent, newEvent: CalendarEvent) => void;
   deleteEvent: (e: CalendarEvent) => void;
 };
 
@@ -40,8 +40,8 @@ const contextValue: contextType = {
   setMonthToPrevMonth: () => {},
   setMonthToNextMonth: () => {},
   eventsMap: {},
-  addEvent: () => false,
-  updateEvent: () => false,
+  addEvent: () => {},
+  updateEvent: () => {},
   deleteEvent: () => {},
 };
 
@@ -80,7 +80,7 @@ export default function CalendarContextProvider({
     }
   };
 
-  const addEvent = (title: string, date: Date, time: string): boolean => {
+  const addEvent = (title: string, date: Date, time: string): void => {
     const map = { ...eventsMap };
 
     const bucketKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -99,8 +99,6 @@ export default function CalendarContextProvider({
       ];
 
       setEventsMap(map);
-
-      return true;
     } else {
       const eventList = map[bucketKey]; // get event list from bucket
       const events = eventList.filter(
@@ -124,29 +122,27 @@ export default function CalendarContextProvider({
 
         map[bucketKey] = eventList; // attach event list to bucket
         setEventsMap(map);
-
-        return true;
       }
     }
-
-    return false;
   };
 
   const updateEvent = (
     oldEvent: CalendarEvent,
     newEvent: CalendarEvent
-  ): boolean => {
+  ): void => {
     const map = { ...eventsMap };
 
     const bucketKey = `${oldEvent.date.getFullYear()}-${oldEvent.date.getMonth()}-${oldEvent.date.getDate()}`;
 
     // bucket doesn't exist, create bucket
     if (map[bucketKey] == undefined) {
-      return addEvent(newEvent.title, newEvent.date, newEvent.time);
+      addEvent(newEvent.title, newEvent.date, newEvent.time);
     } else {
       deleteEvent(oldEvent);
 
-      return addEvent(newEvent.title, newEvent.date, newEvent.time);
+      setTimeout(() => {
+        addEvent(newEvent.title, newEvent.date, newEvent.time);
+      }, 1);
     }
   };
 

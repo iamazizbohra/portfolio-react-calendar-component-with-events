@@ -58,9 +58,8 @@ export default function CalendarControls() {
   };
 
   const handleFormSubmit = (result: any) => {
-    if (addEvent(result.title, new Date(result.date.toDate()), result.time)) {
-      setOpen(false);
-    }
+    addEvent(result.title, new Date(result.date.toDate()), result.time);
+    setOpen(false);
   };
 
   return (
@@ -105,7 +104,9 @@ export default function CalendarControls() {
 
           <div className={styles.spacer}></div>
 
-          <Button variant="contained" onClick={() => setOpen(true)}>Add Event</Button>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            Add Event
+          </Button>
 
           {open && (
             <ManageEventDialog

@@ -34,9 +34,8 @@ export default function CalendarEventItem(props: propsType) {
       time: result.time,
     };
 
-    if (updateEvent(props.event, newEvent)) {
-      setOpen(false);
-    }
+    updateEvent(props.event, newEvent);
+    setOpen(false);
   };
 
   const handleDelete = (result: any) => {

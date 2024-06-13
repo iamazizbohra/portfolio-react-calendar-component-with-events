@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "./calendar-controls.module.scss";
 import useIntit from "@/hooks/useInit";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -64,8 +63,8 @@ export default function CalendarControls() {
 
   return (
     <>
-      <div className={styles.controls}>
-        <div className={styles.left}>
+      <div className="flex justify-between mb-4">
+        <div className="flex items-center">
           <FormControl sx={{ minWidth: 150 }}>
             <InputLabel id="select-year-label">Select Year</InputLabel>
             <Select
@@ -83,7 +82,7 @@ export default function CalendarControls() {
             </Select>
           </FormControl>
 
-          <div className={styles.spacer}></div>
+          <div className="mx-2"></div>
 
           <FormControl sx={{ minWidth: 150 }}>
             <InputLabel id="select-month-label">Select Month</InputLabel>
@@ -102,7 +101,7 @@ export default function CalendarControls() {
             </Select>
           </FormControl>
 
-          <div className={styles.spacer}></div>
+          <div className="mx-2"></div>
 
           <Button variant="contained" onClick={() => setOpen(true)}>
             Add Event
@@ -119,7 +118,7 @@ export default function CalendarControls() {
           )}
         </div>
 
-        <div className={styles.right}>
+        <div className="flex">
           <IconButton
             aria-label="prev-month"
             onClick={handlePrevMonthClick}
@@ -138,7 +137,7 @@ export default function CalendarControls() {
             <ChevronLeftIcon />
           </IconButton>
 
-          <div className={styles.spacer}></div>
+          <div className="mx-1"></div>
 
           <IconButton
             aria-label="next-month"

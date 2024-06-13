@@ -3,7 +3,6 @@
 import { CalendarCell } from "@/components/calendar/types";
 import clsx from "clsx";
 import { useContext } from "react";
-import styles from "./cell-button.module.scss";
 import { CalendarContext } from "@/context/calendar-context-provider";
 
 export default function CellButton({
@@ -21,21 +20,26 @@ export default function CellButton({
       <button
         onClick={() => handleDateSelect(value)}
         className={clsx(
-          [styles.button],
+          [
+            "text-[#aaaaaa] text-xl w-12 h-12 rounded-[3rem] m-2 cursor-default",
+          ], // default style
           [
             value.year === currentDate.getFullYear() &&
               value.month === currentDate.getMonth() &&
               value.day === currentDate.getDate() &&
-              styles.btnCurrentDay,
-          ],
-          [value.month === selectedMonth && styles.btnCurrentMonth],
+              "border border-[#0000006b]",
+          ], // current date style
+          [
+            value.month === selectedMonth &&
+              "!text-[#000] !cursor-pointer hover:bg-[#ccc]",
+          ], // current month style
           [
             selectedDate &&
               value.year === selectedDate.getFullYear() &&
               value.month === selectedDate.getMonth() &&
               value.day === selectedDate.getDate() &&
-              styles.btnSelected,
-          ]
+              "!text-[#fff] bg-[#333]",
+          ] // selected date style
         )}
       >
         {value.day}

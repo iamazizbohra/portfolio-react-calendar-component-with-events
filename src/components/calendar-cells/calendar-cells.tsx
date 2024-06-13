@@ -1,7 +1,6 @@
 "use client";
 
 import useIntit from "@/hooks/useInit";
-import styles from "./calendar-cells.module.scss";
 import { useContext, useEffect, useRef } from "react";
 import { CalendarCell } from "../calendar/types";
 import CellButton from "./cell-button/cell-button";
@@ -22,11 +21,13 @@ export default function CalendarCells() {
 
   return (
     <>
-      <table className={styles.table}>
+      <table className="w-full">
         <thead>
           <tr>
             {weekList.current.map((week, index) => (
-              <th key={index}>{week}</th>
+              <th className="text-xl" key={index}>
+                {week}
+              </th>
             ))}
           </tr>
         </thead>
@@ -41,7 +42,7 @@ export default function CalendarCells() {
           {cellList.map((rows, index) => (
             <tr key={index}>
               {rows.map((cell, index) => (
-                <td key={index}>
+                <td className="text-center" key={index}>
                   <CellButton
                     value={cell}
                     handleDateSelect={handleDateSelect}

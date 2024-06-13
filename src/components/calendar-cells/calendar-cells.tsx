@@ -1,7 +1,7 @@
 "use client";
 
 import useIntit from "@/hooks/useInit";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { CalendarCell } from "../calendar/types";
 import CellButton from "./cell-button/cell-button";
 import { CalendarContext } from "@/context/calendar-context-provider";

@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning className={inter.className}>
+      <body className={inter.className}>
         <AppRouterCacheProvider>
           <MuiLocalizationProvider>
             <ThemeProvider theme={theme}>{children}</ThemeProvider>

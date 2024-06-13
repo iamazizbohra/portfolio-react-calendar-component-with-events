@@ -21,14 +21,13 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CalendarContext } from "@/app/context/calendar-context-provider";
+import dayjs from "dayjs";
 
-const AddEventFormSchema = yup
-  .object({
-    title: yup.string().required(),
-    date: yup.string().required(),
-    time: yup.string().required(),
-  })
-  .required();
+interface IFormInputs {
+  title: string;
+  date: any;
+  time: string;
+}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -48,13 +47,20 @@ export default function AddEventDialog() {
   const [open, setOpen] = useState(false);
   const { getTimeList } = useInit();
 
-  const { control, register, handleSubmit, reset } = useForm({
-    resolver: yupResolver(AddEventFormSchema),
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormInputs>({
     defaultValues: {
+      title: "",
+      date: null,
       time: "",
     },
   });
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<IFormInputs> = (data: any) => {
     addEvent(data.title, new Date(data.date), data.time);
     reset();
     setOpen(false);
@@ -112,7 +118,8 @@ export default function AddEventDialog() {
               <TextField
                 label="Title"
                 variant="outlined"
-                {...register("title")}
+                error={errors.title ? true : false}
+                {...register("title", { required: true })}
               />
             </FormControl>
 
@@ -120,7 +127,17 @@ export default function AddEventDialog() {
               <Controller
                 name="date"
                 control={control}
-                render={({ field }) => <DatePicker {...field} />}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <DatePicker
+                    slotProps={{
+                      textField: {
+                        error: errors.date ? true : false,
+                      },
+                    }}
+                    {...field}
+                  />
+                )}
               />
             </FormControl>
 
@@ -129,8 +146,9 @@ export default function AddEventDialog() {
               <Controller
                 name="time"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
-                  <Select {...field}>
+                  <Select error={errors.time ? true : false} {...field}>
                     {timeList.current.map((time, index) => (
                       <MenuItem key={index} value={time}>
                         {time}

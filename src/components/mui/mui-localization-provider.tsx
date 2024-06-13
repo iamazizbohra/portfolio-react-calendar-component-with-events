@@ -1,7 +1,7 @@
 "use client";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function MuiLocalizationProvider({
   children,
@@ -9,7 +9,7 @@ export default function MuiLocalizationProvider({
   children: React.ReactNode;
 }) {
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       {children}
     </LocalizationProvider>
   );

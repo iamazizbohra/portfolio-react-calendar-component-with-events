@@ -23,7 +23,7 @@ type contextType = {
   setSelectedMonth: (year: number) => void;
   setMonthToPrevMonth: () => void;
   setMonthToNextMonth: () => void;
-  calendarEvents: CalendarEventsMap;
+  eventsMap: CalendarEventsMap;
   addEvent: (title: string, date: Date, time: string) => boolean;
   updateEvent: (oldEvent: CalendarEvent, newEvent: CalendarEvent) => boolean;
   deleteEvent: (e: CalendarEvent) => void;
@@ -39,7 +39,7 @@ const contextValue: contextType = {
   setSelectedMonth: () => {},
   setMonthToPrevMonth: () => {},
   setMonthToNextMonth: () => {},
-  calendarEvents: {},
+  eventsMap: {},
   addEvent: () => false,
   updateEvent: () => false,
   deleteEvent: () => {},
@@ -60,7 +60,7 @@ export default function CalendarContextProvider({
   const [selectedMonth, setSelectedMonth] = useState<number>(
     new Date().getMonth()
   );
-  const [calendarEvents, setCalendarEvents] = useState<CalendarEventsMap>({});
+  const [eventsMap, setEventsMap] = useState<CalendarEventsMap>({});
 
   const setMonthToPrevMonth = (): void => {
     if (selectedMonth == 0) {
@@ -81,13 +81,13 @@ export default function CalendarContextProvider({
   };
 
   const addEvent = (title: string, date: Date, time: string): boolean => {
-    const events = { ...calendarEvents };
+    const map = { ...eventsMap };
 
     const bucketKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
     // bucket doesn't exist, create bucket
-    if (events[bucketKey] == undefined) {
-      events[bucketKey] = [
+    if (map[bucketKey] == undefined) {
+      map[bucketKey] = [
         {
           title: title,
           date: date,
@@ -98,12 +98,12 @@ export default function CalendarContextProvider({
         },
       ];
 
-      setCalendarEvents(events);
+      setEventsMap(map);
 
       return true;
     } else {
-      const eventList = events[bucketKey]; // get event list from bucket
-      const event = eventList.filter(
+      const eventList = map[bucketKey]; // get event list from bucket
+      const events = eventList.filter(
         (event: CalendarEvent) =>
           event.year == date.getFullYear() &&
           event.month == date.getMonth() &&
@@ -111,8 +111,8 @@ export default function CalendarContextProvider({
           event.time == time
       );
 
-      if (event.length == 0) {
-        // event doesn't exist
+      // prevent duplicate event
+      if (events.length == 0) {
         eventList.push({
           title: title,
           date: date,
@@ -122,8 +122,8 @@ export default function CalendarContextProvider({
           time: time,
         });
 
-        events[bucketKey] = eventList; // attach event list to bucket
-        setCalendarEvents(events);
+        map[bucketKey] = eventList; // attach event list to bucket
+        setEventsMap(map);
 
         return true;
       }
@@ -136,48 +136,31 @@ export default function CalendarContextProvider({
     oldEvent: CalendarEvent,
     newEvent: CalendarEvent
   ): boolean => {
-    const events = { ...calendarEvents };
+    const map = { ...eventsMap };
 
     const bucketKey = `${oldEvent.date.getFullYear()}-${oldEvent.date.getMonth()}-${oldEvent.date.getDate()}`;
 
     // bucket doesn't exist, create bucket
-    if (events[bucketKey] == undefined) {
+    if (map[bucketKey] == undefined) {
       return addEvent(newEvent.title, newEvent.date, newEvent.time);
     } else {
-      const eventList = events[bucketKey]; // get event list from bucket
-      const event = eventList.filter(
-        (event: CalendarEvent) =>
-          event.year == oldEvent.year &&
-          event.month == oldEvent.month &&
-          event.day == oldEvent.day &&
-          event.time == oldEvent.time
-      );
+      deleteEvent(oldEvent);
 
-      if (event.length > 0) {
-        const index = eventList.indexOf(event[0]);
-        eventList.splice(index, 1);
-
-        events[bucketKey] = eventList;
-        setCalendarEvents(events);
-
-        return addEvent(newEvent.title, newEvent.date, newEvent.time);
-      }
+      return addEvent(newEvent.title, newEvent.date, newEvent.time);
     }
-
-    return false;
   };
 
   const deleteEvent = (e: CalendarEvent): void => {
-    const events = { ...calendarEvents };
+    const map = { ...eventsMap };
 
     const bucketKey = `${e.date.getFullYear()}-${e.date.getMonth()}-${e.date.getDate()}`;
 
     // bucket doesn't exist
-    if (events[bucketKey] == undefined) {
+    if (map[bucketKey] == undefined) {
       // do nothing
     } else {
-      const eventList = events[bucketKey]; // get event list from bucket
-      const event = eventList.filter(
+      const eventList = map[bucketKey]; // get event list from bucket
+      const events = eventList.filter(
         (event: CalendarEvent) =>
           event.year == e.year &&
           event.month == e.month &&
@@ -185,12 +168,17 @@ export default function CalendarContextProvider({
           event.time == e.time
       );
 
-      if (event.length > 0) {
-        const index = eventList.indexOf(event[0]);
+      if (events.length > 0) {
+        const index = eventList.indexOf(events[0]);
         eventList.splice(index, 1);
 
-        events[bucketKey] = eventList;
-        setCalendarEvents(events);
+        if (eventList.length == 0) {
+          delete map[bucketKey];
+        } else {
+          map[bucketKey] = eventList;
+        }
+
+        setEventsMap(map);
       }
     }
   };
@@ -207,7 +195,7 @@ export default function CalendarContextProvider({
         setSelectedMonth,
         setMonthToPrevMonth,
         setMonthToNextMonth,
-        calendarEvents,
+        eventsMap,
         addEvent,
         updateEvent,
         deleteEvent,

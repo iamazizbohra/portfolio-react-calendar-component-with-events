@@ -4,7 +4,7 @@ import { CalendarCell } from "@/components/calendar/types";
 import clsx from "clsx";
 import { useContext } from "react";
 import styles from "./cell-button.module.scss";
-import { CalendarContext } from "@/app/context/calendar-context-provider";
+import { CalendarContext } from "@/context/calendar-context-provider";
 
 export default function CellButton({
   value,

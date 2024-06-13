@@ -5,7 +5,7 @@ import styles from "./calendar-cells.module.scss";
 import { useContext, useEffect, useRef } from "react";
 import { CalendarCell } from "../calendar/types";
 import CellButton from "./cell-button/cell-button";
-import { CalendarContext } from "@/app/context/calendar-context-provider";
+import { CalendarContext } from "@/context/calendar-context-provider";
 
 export default function CalendarCells() {
   const { selectedMonth, setSelectedDate } = useContext(CalendarContext);

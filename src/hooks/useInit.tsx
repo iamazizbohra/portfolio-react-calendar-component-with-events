@@ -1,4 +1,4 @@
-import { CalendarContext } from "@/app/context/calendar-context-provider";
+import { CalendarContext } from "@/context/calendar-context-provider";
 import { CalendarCell } from "@/components/calendar/types";
 import { useContext } from "react";
 

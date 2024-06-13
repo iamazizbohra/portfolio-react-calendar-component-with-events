@@ -6,14 +6,17 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { CalendarContext } from "@/app/context/calendar-context-provider";
-import AddEventDialog from "../dialogs/add-event-dialog/add-event-dialog";
+import { CalendarContext } from "@/context/calendar-context-provider";
+import ManageEventDialog from "../dialogs/manage-event-dialog/manage-event-dialog";
+import { DialogProps } from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
 
 export default function CalendarControls() {
+  const [open, setOpen] = useState(false);
   const {
     selectedYear,
     setSelectedYear,
@@ -21,6 +24,7 @@ export default function CalendarControls() {
     setSelectedMonth,
     setMonthToPrevMonth,
     setMonthToNextMonth,
+    addEvent,
   } = useContext(CalendarContext);
   const { getYearList, getMonthList } = useIntit();
   const yearList = useRef(getYearList(4, 11));
@@ -40,6 +44,23 @@ export default function CalendarControls() {
 
   const handleNextMonthClick = () => {
     setMonthToNextMonth();
+  };
+
+  const handleImplicitClose: DialogProps["onClose"] = (event, reason) => {
+    if ((reason && reason === "backdropClick") || reason === "escapeKeyDown")
+      return;
+
+    setOpen(false);
+  };
+
+  const handleExplicitClose = () => {
+    setOpen(false);
+  };
+
+  const handleFormSubmit = (result: any) => {
+    if (addEvent(result.title, new Date(result.date.toDate()), result.time)) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -84,7 +105,17 @@ export default function CalendarControls() {
 
           <div className={styles.spacer}></div>
 
-          <AddEventDialog></AddEventDialog>
+          <Button variant="contained" onClick={() => setOpen(true)}>Add Event</Button>
+
+          {open && (
+            <ManageEventDialog
+              oldEvent={null}
+              newEvent={null}
+              handleImplicitClose={handleImplicitClose}
+              handleExplicitClose={handleExplicitClose}
+              handleFormSubmit={handleFormSubmit}
+            />
+          )}
         </div>
 
         <div className={styles.right}>

@@ -1,9 +1,10 @@
 "use client";
 
-import CalendarContextProvider from "@/app/context/calendar-context-provider";
+import CalendarContextProvider from "@/context/calendar-context-provider";
 import CalendarCells from "../calendar-cells/calendar-cells";
 import CalendarControls from "../calendar-controls/calendar-controls";
 import styles from "./calendar.module.scss";
+import CalendarEvents from "../calendar-events/calendar-events";
 export default function Calendar() {
   return (
     <CalendarContextProvider>
@@ -17,7 +18,7 @@ export default function Calendar() {
         <div className={styles.spacer}></div>
 
         <div className={styles.events}>
-          {/* <app-calendar-events></app-calendar-events> */}
+          <CalendarEvents></CalendarEvents>
         </div>
       </div>
     </CalendarContextProvider>
